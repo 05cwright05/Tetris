@@ -14,7 +14,12 @@ namespace tetris
     public partial class Form1 : Form
     {
         public Label[,] grid = new Label[8, 12];
+        List<Label> Piece = new List<Label>();
+        List<Label> PieceList = new List<Label>();
+        List<Point> Pos = new List<Point>();
+        List<int> yPos = new List<int>();
         int type;
+        
         public Form1()
         {
             InitializeComponent();
@@ -22,21 +27,72 @@ namespace tetris
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+            
             SpawnGrid();
-            type = 1;
+            PopulatePositionLists();
+            type = 0;
             //SpawnBlock1();
             //Rotate();
             EasierRotation();
-            SpawnBlock();
+            SpawnBlock2();
         }
-        private void SpawnBlock()
+        private void PopulatePositionLists()
+        {
+            //Should add an ability to add an offset by like a plus i 
+            Pos.Add(grid[0, 0].Location);
+            Pos.Add(grid[0, 1].Location);
+            Pos.Add(grid[0, 2].Location);
+            Pos.Add(grid[0, 3].Location);
+
+            Pos.Add(grid[1, 0].Location);
+            Pos.Add(grid[1, 1].Location);
+            Pos.Add(grid[1, 2].Location);
+            Pos.Add(grid[1, 3].Location);
+
+            Pos.Add(grid[2, 0].Location);
+            Pos.Add(grid[2, 1].Location);
+            Pos.Add(grid[2, 2].Location);
+            Pos.Add(grid[2, 3].Location);
+
+            Pos.Add(grid[3, 0].Location);
+            Pos.Add(grid[3, 1].Location);
+            Pos.Add(grid[3, 2].Location);
+            Pos.Add(grid[3, 3].Location);
+            MessageBox.Show(Pos.Count().ToString());
+        }
+
+        private void SpawnBlock2()
         {
             //Piece piece1 = new Piece(1, 1, 3);
 
             //So we can create a list of lists and seperate each piece by block (which we should do so they can be cleared later)
             //or i can high light blocks, i have just been having trouble keeping track of where multiple pieces are and rotating(tho this is a possible solution)
             //or a single piece and maybe make a conglomeration at the bottom idk man.
+
+
+            if (type == 0)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    Label label = new Label();
+                    label.BackColor = Color.Blue;
+                    label.AutoSize = false;
+                    label.Size = grid[0, 0].Size;
+                    label.Location = new Point();
+                    Controls.Add(label);
+                    Piece.Add(label);
+
+                   
+                }
+                MessageBox.Show(Piece.Count().ToString());
+                Piece[1].Location = Pos[5];
+                Piece[2].Location = Pos[6];
+                Piece[3].Location = Pos[9];
+                Piece[4].Location = Pos[10];
+
+            }
         }
+
         private void EasierRotation()
         {
             
@@ -67,6 +123,9 @@ namespace tetris
                 
             }
         }
+        int x = 0;
+        int y = 0;
+
         private void SpawnBlock()
         {
             for (int c=2; c <=5; c++)
@@ -80,16 +139,51 @@ namespace tetris
             if(type ==0)
             {
                 grid[3, 1].BackColor = Color.Red;
-                grid[3, 2].BackColor = Color.Red;
+                grid[3,2].BackColor = Color.Red;
+
                 grid[4, 1].BackColor = Color.Red;
-                grid[4, 2].BackColor = Color.Red;
-            }else if(type == 1)
+                grid[4,2].BackColor = Color.Red;
+
+
+            }
+            else if(type == 1)
             {
                 grid[2, 1].BackColor = Color.Red;
                 grid[3, 1].BackColor = Color.Red;
                 grid[4, 1].BackColor = Color.Red;
                 grid[4, 2].BackColor = Color.Red;
             }
+            try
+            {
+
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void tmrMove_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                for (int r = 0; r < grid.GetLength(0); r++)
+                {
+                    for (int c = 0; c < grid.GetLength(1); c++)
+                    {
+                        if (grid[c,r].BackColor == Color.Red)
+                        {
+                            grid[c, r +1].BackColor = grid[c,r ].BackColor;
+                            //grid[c,r].BackColor = Color.Black;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
         }
     }
 }

@@ -28,7 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            this.tmrMove = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
+            // 
+            // tmrMove
+            // 
+            this.tmrMove.Enabled = true;
+            this.tmrMove.Interval = 1000;
+            this.tmrMove.Tick += new System.EventHandler(this.tmrMove_Tick);
             // 
             // Form1
             // 
@@ -44,6 +52,8 @@
         }
 
         #endregion
+
+        private System.Windows.Forms.Timer tmrMove;
     }
 }
 
