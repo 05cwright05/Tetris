@@ -34,8 +34,7 @@
             // 
             // tmrMove
             // 
-            this.tmrMove.Enabled = true;
-            this.tmrMove.Interval = 1000;
+            this.tmrMove.Interval = 50;
             this.tmrMove.Tick += new System.EventHandler(this.tmrMove_Tick);
             // 
             // Form1
